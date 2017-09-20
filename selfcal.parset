@@ -378,6 +378,7 @@ filter_model.argument.skymodel                               =   inmodel
 filter_model.argument.maskname                               =   inmask
 filter_model.argument.skymodel_cut                           =   outputkey
 filter_model.argument.scripts                                =   {{ scripts }}
+filter_model.argument.delete_LogSI_column                    =   True
 
 ### Step: 15a
 ### --- Create skymodel for calibrator
@@ -507,6 +508,7 @@ filter_model_low.argument.skymodel                           =   inmodel
 filter_model_low.argument.maskname                           =   inmask
 filter_model_low.argument.skymodel_cut                       =   outputkey
 filter_model_low.argument.scripts                            =   {{ scripts }}
+filter_model_low.argument.delete_LogSI_column                =   True
 
 ### Step: 20a
 ### --- Create skymodel for calibrator
@@ -1288,6 +1290,7 @@ filter_model_loop.argument.skymodel                          =   selfcal-prep.ou
 filter_model_loop.argument.maskname                          =   selfcal-prep.output.image_mask
 filter_model_loop.argument.skymodel_cut                      =   selfcal-prep.output.filter_model
 filter_model_loop.argument.scripts                           =   {{ scripts }}
+filter_model_loop.argument.delete_LogSI_column               =   True
 
 ### Step: 44b
 ### --- Create skymodel for calibrator

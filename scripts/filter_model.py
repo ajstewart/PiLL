@@ -2,11 +2,11 @@
 import numpy as np
 import sys
     
-def delete_column(fskymodel, col_to_delete, logger):
+def delete_column(wscskymodel, col_to_delete, logger):
     new_model=[] #store the altered model ready to write to file.
     
     #Fetch the filtered skymodel
-    with open(fskymodel) as f:
+    with open(wscskymodel, 'r') as f:
         g=f.readlines()
         
     #First check whether the column is actually there, return if not.    
@@ -24,6 +24,9 @@ def delete_column(fskymodel, col_to_delete, logger):
         new_model.append(split_format)
         #Now loop through the sources
         for source in g[1:]:
+            #Just in case of blank lines or comments
+            if source=="\n" or source.startswith("# "):
+                continue
             source_split=source.rstrip().split(",")     #Split by comma again
             source_len=len(source_split)
             if source_len==num_cols:
@@ -60,7 +63,7 @@ def delete_column(fskymodel, col_to_delete, logger):
     new_model=np.array(new_model)       #convert to numpy array
     # print new_model
     #Write the new skymodel (it overwrites)
-    np.savetxt(fskymodel, new_model, delimiter=",", fmt='%s')      #save the new skymodel replacing the old one
+    np.savetxt(wscskymodel, new_model, delimiter=",", fmt='%s')      #save the new skymodel replacing the old one
     return True
 
 
@@ -68,6 +71,15 @@ def main(ms,skymodel,maskname,skymodel_cut,scripts,keep_in_beam=True,delete_LogS
     
     sys.path.append(scripts)
     from lib_pipeline import *
+    
+    #Fix for old makesourcedb
+    if delete_LogSI_column:
+            logger.info("Attempting to delete the 'LogarithmicSI' column from the sky model...")
+            success=delete_column(skymodel, 'LogarithmicSI', logger)
+            if success:
+                logger.info("LogarithmicSI column successfully deleted.")
+            else:
+                logger.error("Error occurred when trying to delete LogarithmicSI column. Model not changed.")
 
     # make beam
     phasecentre = get_phase_centre(ms)
@@ -84,14 +96,6 @@ def main(ms,skymodel,maskname,skymodel_cut,scripts,keep_in_beam=True,delete_LogS
     #lsm.remove(np.abs(fluxes) < 5e-4) # TEST
     lsm.write(skymodel_cut, format='makesourcedb', clobber=True)
     del lsm
-    #Fix for old makesourcedb
-    if delete_LogSI_column:
-            logger.info("Attempting to delete the 'LogarithmicSI' column from the sky model...")
-            success=delete_column(skymodel_cut, 'LogarithmicSI', logger)
-            if success:
-                logger.info("LogarithmicSI column successfully deleted.")
-            else:
-                logger.error("Error occurred when trying to delete LogarithmicSI column. Model not changed.")
     pass
 
 

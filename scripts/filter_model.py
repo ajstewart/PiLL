@@ -2,7 +2,7 @@
 import numpy as np
 import sys
     
-def delete_column(fskymodel, col_to_delete):
+def delete_column(fskymodel, col_to_delete, logger):
     new_model=[] #store the altered model ready to write to file.
     
     #Fetch the filtered skymodel
@@ -87,7 +87,7 @@ def main(ms,skymodel,maskname,skymodel_cut,scripts,keep_in_beam=True,delete_LogS
     #Fix for old makesourcedb
     if delete_LogSI_column:
             logger.info("Attempting to delete the 'LogarithmicSI' column from the sky model...")
-            success=delete_column(skymodel_cut, 'LogarithmicSI')
+            success=delete_column(skymodel_cut, 'LogarithmicSI', logger)
             if success:
                 logger.info("LogarithmicSI column successfully deleted.")
             else:
@@ -113,6 +113,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    main(ms=args.ms,skymodel=args.skymodel,maskname=args.mask,skymodel_cut=args.output,scripts=args.scripts, delete_LogSI_column=args.removeLogSIcol) #delete LogSI required for old makesourcedb.
+    main(ms=args.ms,skymodel=args.skymodel,maskname=args.mask,skymodel_cut=args.output,scripts=args.scripts, delete_LogSI_column=args.delete_LogSI_col) #delete LogSI required for old makesourcedb.
     
     pass

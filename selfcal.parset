@@ -8,6 +8,7 @@
 #Steps with delete column
 pipeline.steps = [listsplit,listsplit2,listtemp2,listFRtar,listtec,listcolumn,listinst,addcol,sky_tar,sourcedbtar,listsourcedbtar2,predicttar,parmdbFRtar,fixFRtar,smoothtar,teccal,makevdstar,findvds,globaldbtec,h5parmtec,losotoplot,applytec,image_high1,createmap_high_image,mask_high,image_high2,listmodel,delete_model_col,filter_model,make_sourcedb_target,listsourcedbtar3,predicttar_high,subtract_model,image_low,createmap_low_image,listmodel_low,mask_low,delete_model_col_low,filter_model_low,make_sourcedb_target_low,listsourcedbtar4,predicttar_low,corrupt_model,subtract_model_low,restore_model,loop,image_deep,image_deep_high]
 
+#Steps without delete column
 # pipeline.steps = [listsplit,listsplit2,listtemp2,listFRtar,listtec,listcolumn,listinst,addcol,sky_tar,sourcedbtar,listsourcedbtar2,predicttar,parmdbFRtar,fixFRtar,smoothtar,teccal,makevdstar,findvds,globaldbtec,h5parmtec,losotoplot,applytec,image_high1,createmap_high_image,mask_high,image_high2,listmodel,filter_model,make_sourcedb_target,listsourcedbtar3,predicttar_high,subtract_model,image_low,createmap_low_image,listmodel_low,mask_low,filter_model_low,make_sourcedb_target_low,listsourcedbtar4,predicttar_low,corrupt_model,subtract_model_low,restore_model,loop,image_deep,image_deep_high]
 
 ################################################################################################################################################################################################################################################################
@@ -369,7 +370,7 @@ listmodel.control.mapfile_dir                                =   input.output.ma
 listmodel.control.filename                                   =   listmodel.mapfile
 listmodel.control.pattern                                    =   *image_high2-sources.txt
 
-### Step: 14bx
+### Step: 14ab
 # remove LogarithmicSI column from the skymodel
 delete_model_col.control.type                                    =   pythonplugin
 delete_model_col.control.executable                              =   {{ scripts }}/delete_model_column.py
@@ -507,7 +508,7 @@ mask_low.argument.adaptive_rmsbox                            =   True
 mask_low.argument.img_format                                 =   fits
 mask_low.argument.atrous_jmax                                =   3
 
-### Step: 19dx
+### Step: 19ca
 # remove LogarithmicSI column from the skymodel
 delete_model_col_low.control.type                                    =   pythonplugin
 delete_model_col_low.control.executable                              =   {{ scripts }}/delete_model_column.py
@@ -1271,7 +1272,7 @@ mask_high_loop.argument.adaptive_rmsbox                      =   True
 mask_high_loop.argument.img_format                           =   fits
 mask_high_loop.argument.atrous_jmax                          =   3
 
-### Step: 43
+### Step: 43a
 # Second high-res loop imaging
 image_high2_loop.control.kind                                =   recipe
 image_high2_loop.control.type                                =   executable_args
@@ -1301,7 +1302,7 @@ image_high2_loop.argument.channelsout                        =   10
 image_high2_loop.argument.auto-threshold                     =   0.1
 image_high2_loop.argument.minuv-l                            =   30
 
-### Step: 44ax
+### Step: 43b
 # remove LogarithmicSI column from the skymodel
 delete_model_col_loop.control.type                                    =   pythonplugin
 delete_model_col_loop.control.executable                              =   {{ scripts }}/delete_model_column.py

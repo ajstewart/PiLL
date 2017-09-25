@@ -2,11 +2,11 @@
 
 import numpy as np
 
-def main(wscskymodel, col_to_delete):
+def main(skymodel, col_to_delete):
     new_model=[] #store the altered model ready to write to file.
     
     #Fetch the filtered skymodel
-    with open(wscskymodel, 'r') as f:
+    with open(skymodel, 'r') as f:
         g=f.readlines()
         
     #First check whether the column is actually there, return if not.    
@@ -63,7 +63,7 @@ def main(wscskymodel, col_to_delete):
     new_model=np.array(new_model)       #convert to numpy array
     # print new_model
     #Write the new skymodel (it overwrites)
-    np.savetxt(wscskymodel, new_model, delimiter=",", fmt='%s')      #save the new skymodel replacing the old one
+    np.savetxt(skymodel, new_model, delimiter=",", fmt='%s')      #save the new skymodel replacing the old one
     
     pass
 
@@ -82,6 +82,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    main(wscskymodel=args.skymodel, col_to_delete=args.column_to_delete)
+    main(skymodel=args.skymodel, col_to_delete=args.column_to_delete)
     
     pass
